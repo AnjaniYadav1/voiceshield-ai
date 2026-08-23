@@ -7,10 +7,19 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-UPLOAD_DIR = BASE_DIR / "uploads"
-EMBEDDINGS_DIR = BASE_DIR / "embeddings"
+
+# Vercel's serverless filesystem is read-only everywhere except /tmp, so any
+# folder we create or file we write (uploads, embeddings, the SQLite db)
+# must live there when running on Vercel. Locally (uvicorn, run.bat) or on
+# a normal server (Render, a VM), the project directory works fine and is
+# used instead so nothing changes for that setup.
+IS_VERCEL = os.getenv("VERCEL") == "1"
+RUNTIME_DIR = Path("/tmp/voiceshield") if IS_VERCEL else BASE_DIR
+
+UPLOAD_DIR = RUNTIME_DIR / "uploads"
+EMBEDDINGS_DIR = RUNTIME_DIR / "embeddings"
 MODEL_DIR = BASE_DIR.parent / "models"
-DB_PATH = BASE_DIR / "voiceshield.db"
+DB_PATH = RUNTIME_DIR / "voiceshield.db"
 
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 EMBEDDINGS_DIR.mkdir(parents=True, exist_ok=True)
