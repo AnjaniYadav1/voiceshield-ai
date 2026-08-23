@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+*.egg-info/
+
+# Backend runtime data
+backend/uploads/
+backend/embeddings/
+backend/voiceshield.db
+backend/.env
+models/*.joblib
+!models/authenticity_classifier.joblib
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.env
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Test data (real audio files should not be committed to a public repo)
+data/genuine/*
+data/synthetic/*
+!data/genuine/.gitkeep
+!data/synthetic/.gitkeep

@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-multipart
+librosa
+numpy
+scipy
+scikit-learn
+joblib
+soundfile
+python-dotenv
+pytest
+httpx
