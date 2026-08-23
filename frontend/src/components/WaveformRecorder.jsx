@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import RecordRTC, { StereoAudioRecorder } from "recordrtc";
+import RecordRTC from "recordrtc";
 
 export default function WaveformRecorder({ onRecordingComplete }) {
   const [isRecording, setIsRecording] = useState(false);
@@ -16,7 +16,6 @@ export default function WaveformRecorder({ onRecordingComplete }) {
     const canvas = canvasRef.current;
     const analyser = analyserRef.current;
     if (!canvas || !analyser) return;
-
     const ctx = canvas.getContext("2d");
     const bufferLength = analyser.fftSize;
     const dataArray = new Uint8Array(bufferLength);
@@ -29,7 +28,6 @@ export default function WaveformRecorder({ onRecordingComplete }) {
 
       const barWidth = canvas.width / 64;
       const step = Math.floor(bufferLength / 64);
-
       for (let i = 0; i < 64; i++) {
         const val = dataArray[i * step] / 128.0 - 1.0;
         const barHeight = Math.abs(val) * canvas.height * 1.8 + 3;
@@ -51,19 +49,17 @@ export default function WaveformRecorder({ onRecordingComplete }) {
     const analyser = audioCtx.createAnalyser();
     analyser.fftSize = 512;
     source.connect(analyser);
-
     audioCtxRef.current = audioCtx;
     analyserRef.current = analyser;
     draw();
 
-    // Use RecordRTC to generate a .wav file directly
     const recorder = new RecordRTC(stream, {
       type: "audio",
       mimeType: "audio/wav",
-      recorderType: StereoAudioRecorder,
-      desiredSampRate: 16000 // 16kHz is ideal for backend ML processing
+      recorderType: RecordRTC.StereoAudioRecorder,
+      numberOfAudioChannels: 1,
+      desiredSampRate: 16000,
     });
-
     recorder.startRecording();
     recorderRef.current = recorder;
 
@@ -73,15 +69,15 @@ export default function WaveformRecorder({ onRecordingComplete }) {
   };
 
   const stopRecording = () => {
-    recorderRef.current?.stopRecording(() => {
-      const blob = recorderRef.current.getBlob();
-      // Pass the WAV blob back to the parent component
-      onRecordingComplete(blob);
-
-      streamRef.current?.getTracks().forEach((t) => t.stop());
-      audioCtxRef.current?.close();
-    });
-
+    const recorder = recorderRef.current;
+    if (recorder) {
+      recorder.stopRecording(() => {
+        const blob = recorder.getBlob();
+        onRecordingComplete(blob);
+      });
+    }
+    streamRef.current?.getTracks().forEach((t) => t.stop());
+    audioCtxRef.current?.close();
     cancelAnimationFrame(animationRef.current);
     clearInterval(timerRef.current);
     setIsRecording(false);
@@ -111,12 +107,14 @@ export default function WaveformRecorder({ onRecordingComplete }) {
           </span>
         )}
       </div>
+
       <canvas
         ref={canvasRef}
         width={640}
         height={120}
         className="w-full rounded-lg border border-line"
       />
+
       <div className="mt-4 flex gap-3">
         {!isRecording ? (
           <button
