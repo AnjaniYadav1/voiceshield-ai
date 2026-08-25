@@ -5,8 +5,6 @@
   <img src="https://img.shields.io/badge/Deepfake-Detection-EF4444?style=for-the-badge" alt="Deepfake Detection"/>
   <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"/>
   <img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React"/>
-  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/Status-MVP-22C55E?style=for-the-badge" alt="MVP"/>
 </p>
 
 <h3 align="center">
@@ -67,8 +65,7 @@ The system combines multiple security signals:
         ↓
 🟢 LOW / 🟡 MEDIUM / 🔴 HIGH
 ```
-
-
+---
 ## ✨ Features
 
 ### 🎙️ AI Voice Detection
@@ -88,10 +85,7 @@ Multiple signals are combined into an easy-to-understand **risk level**.
 | 🟢 **LOW** | No significant impersonation indicators detected |
 | 🟡 **MEDIUM** | Suspicious indicators detected |
 | 🔴 **HIGH** | Strong impersonation indicators detected |
-
-```
-```
-
+---
 ## 📊 Explainable Results
 
 Instead of simply returning `REAL` or `FAKE`, VoiceShield provides:
@@ -131,7 +125,7 @@ The system supports:
 - **Auto Mode** — automatically uses the available analysis pipeline
 
 > ⚠️ Demo results are clearly labeled and should not be interpreted as real-world detection predictions.
-
+---
 # 🧠 How It Works
 
 ```text
@@ -187,7 +181,7 @@ The system supports:
 6. ⚠️ Detection signals are passed to the risk engine.
 7. 📊 The system generates an impersonation-risk assessment.
 8. 🖥️ Results are displayed through the dashboard.
-
+---
 # 🏗️ System Architecture
 
 ```text
@@ -233,6 +227,7 @@ The system supports:
                     │ History + Statistics │
                     └──────────────────────┘
 ```
+---
 # 🛠️ Tech Stack
 
 VoiceShield AI is built using modern web, backend, audio-processing, and machine-learning technologies.
@@ -268,7 +263,7 @@ The current prototype analyzes several acoustic characteristics:
 These features are used for prototype synthetic-voice analysis and speaker verification.
 
 > **Note:** The current repository is an MVP/prototype and does not bundle a production-grade pretrained deepfake detector or neural speaker-embedding model.
-
+---
 # 📂 Project Structure
 
 ```text
@@ -304,6 +299,7 @@ voiceshield-ai/
 └── README.md
 
 ```
+---
 # 🚀 Installation
 
 Follow the steps below to run VoiceShield AI locally.
